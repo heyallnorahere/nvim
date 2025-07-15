@@ -1,2 +1,2 @@
-require("config.remap")
-require("config.lazy")
+require("plugins")
+require("config.remap").map_keys()
