@@ -46,6 +46,7 @@ function export.map_keys()
     -- vim
     wk.add{{
         { "<leader>pv", vim.cmd.Ex },
+        { "<leader>gs", vim.cmd.Git },
     }}
 
     -- harpoon

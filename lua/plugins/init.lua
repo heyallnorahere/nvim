@@ -109,6 +109,11 @@ require("lazy").setup({
       {
           "folke/which-key.nvim",
       },
+
+      -- git
+      {
+          "tpope/vim-fugitive",
+      },
   },
 
   -- Configure any other settings here. See the documentation for more details.
