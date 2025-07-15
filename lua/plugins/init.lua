@@ -35,7 +35,17 @@ require("lazy").setup({
 
       {
           "mason-org/mason-lspconfig.nvim",
-          opts = {},
+          opts = {
+              automatic_enable = true,
+              ensure_installed = {
+                  "cmake",
+                  "clangd",
+                  "lua_ls",
+                  "yamlls",
+                  "glslls",
+                  "jsonls",
+              },
+          },
           dependencies = {
               "mason-org/mason.nvim",
               "neovim/nvim-lspconfig",
@@ -75,6 +85,9 @@ require("lazy").setup({
           branch = "master",
           lazy = false,
           build = ":TSUpdate",
+          opts = {
+              ensure_installed = { "cpp", "c", "glsl", "json", "yaml", "cmake", "lua" },
+          },
       },
 
       -- ide-like features

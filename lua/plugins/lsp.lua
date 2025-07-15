@@ -1,5 +1,4 @@
 return function()
-    local lspconfig = require("lspconfig")
     local remap = require("config.remap")
 
     local function on_lsp_attach(client, buf)
@@ -12,7 +11,7 @@ return function()
         on_attach = on_lsp_attach,
     })
 
-    lspconfig.lua_ls.setup({
+    vim.lsp.config("lua_ls", {
         on_attach = function(client, buf)
             runtime_path = vim.split(package.path, ";")
             table.insert(runtime_path, "lua/?.lua")
@@ -38,5 +37,10 @@ return function()
                 },
             },
         },
+    })
+
+    -- overwrite clangd on_attach
+    vim.lsp.config("clangd", {
+        on_attach = on_lsp_attach,
     })
 end
