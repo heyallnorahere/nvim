@@ -1,17 +1,17 @@
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
-      { "\nPress any key to exit..." },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
-  end
+    local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+    local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+    if vim.v.shell_error ~= 0 then
+        vim.api.nvim_echo({
+            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+            { out,                            "WarningMsg" },
+            { "\nPress any key to exit..." },
+        }, true, {})
+        vim.fn.getchar()
+        os.exit(1)
+    end
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -19,106 +19,149 @@ require("config.set")
 
 -- Setup lazy.nvim
 require("lazy").setup({
-  spec = {
-      -- lsp
-      {
-          "mason-org/mason.nvim",
-          opts = {}
-      },
+    spec = {
+        -- lsp
+        {
+            "mason-org/mason.nvim",
+            opts = {}
+        },
 
-      {
-          "neovim/nvim-lspconfig",
-          dependencies = { "saghen/blink.cmp" },
-          config = require("plugins.lsp"),
-          ft = { "cpp", "c", "cmake", "bash", "yaml", "lua", "json", "glsl" }
-      },
+        {
+            "neovim/nvim-lspconfig",
+            dependencies = { "saghen/blink.cmp" },
+            config = require("plugins.lsp"),
+            ft = { "cpp", "c", "cmake", "bash", "yaml", "lua", "json", "glsl" }
+        },
 
-      {
-          "mason-org/mason-lspconfig.nvim",
-          opts = {
-              automatic_enable = true,
-              ensure_installed = {
-                  "cmake",
-                  "clangd",
-                  "lua_ls",
-                  "yamlls",
-                  "glslls",
-                  "jsonls",
-              },
-          },
-          dependencies = {
-              "mason-org/mason.nvim",
-              "neovim/nvim-lspconfig",
-          },
-      },
+        {
+            "mason-org/mason-lspconfig.nvim",
+            opts = {
+                automatic_enable = true,
+                ensure_installed = {
+                    "cmake",
+                    "clangd",
+                    "lua_ls",
+                    "yamlls",
+                    "glslls",
+                    "jsonls",
+                },
+            },
+            dependencies = {
+                "mason-org/mason.nvim",
+                "neovim/nvim-lspconfig",
+            },
+        },
 
-      {
-          "saghen/blink.cmp",
-          version = "*",
-          opts = {
-              keymap = require("config.remap").cmp,
-              completion = {
-                  list = { selection = { preselect = false } },
-              },
-              sources = {
-                  default = { "buffer", "lsp", "path", "snippets" },
-                  providers = { lsp = { fallbacks = {} } },
-              },
-              fuzzy = { implementation = "prefer_rust_with_warning" },
-          },
-      },
+        {
+            "saghen/blink.cmp",
+            version = "*",
+            opts = {
+                keymap = require("config.remap").cmp,
+                completion = {
+                    list = { selection = { preselect = false } },
+                },
+                sources = {
+                    default = { "buffer", "lsp", "path", "snippets" },
+                    providers = { lsp = { fallbacks = {} } },
+                },
+                fuzzy = { implementation = "prefer_rust_with_warning" },
+                appearance = {
+                    highlight_ns = vim.api.nvim_create_namespace('blink_cmp'),
+                    -- Sets the fallback highlight groups to nvim-cmp's highlight groups
+                    -- Useful for when your theme doesn't support blink.cmp
+                    -- Will be removed in a future release
+                    use_nvim_cmp_as_default = false,
+                    -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+                    -- Adjusts spacing to ensure icons are aligned
+                    nerd_font_variant = 'mono',
+                    kind_icons = {
+                        Text = "Text",
+                        Method = "Method",
+                        Function = "Func",
+                        Constructor = "Ctor",
 
-      {
-          "folke/snacks.nvim",
-          priority = 1000,
-          lazy = false,
+                        Field = "Field",
+                        Variable = "Var",
+                        Property = "Prop",
 
-          ---@type snacks.Config
-          opts = {
-              picker = { enabled = true },
-          }
-      },
+                        Class = "Class",
+                        Interface = "Interface",
+                        Struct = "Struct",
+                        Module = "Mod",
 
-      -- treesitter
-      {
-          "nvim-treesitter/nvim-treesitter",
-          branch = "master",
-          lazy = false,
-          build = ":TSUpdate",
-          opts = {
-              ensure_installed = { "cpp", "c", "glsl", "json", "yaml", "cmake", "lua" },
-          },
-      },
+                        Unit = "Unit",
+                        Value = "Val",
+                        Enum = "Enum",
+                        EnumMember = "EVal",
 
-      -- ide-like features
-      {
-          "nvim-telescope/telescope.nvim", tag = "0.1.8",
-          dependencies = { "nvim-lua/plenary.nvim" }
-      },
+                        Keyword = "Key",
+                        Constant = "Const",
 
-      {
-          "theprimeagen/harpoon",
-      },
+                        Snippet = "Snip",
+                        Color = "Color",
+                        File = "File",
+                        Reference = "Ref",
+                        Folder = "Dir", -- why is it called a "folder" lmfao
+                        Event = "Event",
+                        Operator = "Op",
+                        TypeParameter = "TypeParam",
+                    },
+                }
+            },
+        },
 
-      -- theme
-      {
-          "Shatur/neovim-ayu",
-      },
+        {
+            "folke/snacks.nvim",
+            priority = 1000,
+            lazy = false,
 
-      -- keymapping
-      {
-          "folke/which-key.nvim",
-      },
+            ---@type snacks.Config
+            opts = {
+                picker = { enabled = true },
+            }
+        },
 
-      -- git
-      {
-          "tpope/vim-fugitive",
-      },
-  },
+        -- treesitter
+        {
+            "nvim-treesitter/nvim-treesitter",
+            branch = "master",
+            lazy = false,
+            build = ":TSUpdate",
+            opts = {
+                ensure_installed = { "cpp", "c", "glsl", "json", "yaml", "cmake", "lua" },
+            },
+        },
 
-  -- Configure any other settings here. See the documentation for more details.
-  -- colorscheme that will be used when installing plugins.
-  install = { colorscheme = { "habamax" } },
-  -- automatically check for plugin updates
-  checker = { enabled = true },
+        -- ide-like features
+        {
+            "nvim-telescope/telescope.nvim",
+            tag = "0.1.8",
+            dependencies = { "nvim-lua/plenary.nvim" }
+        },
+
+        {
+            "theprimeagen/harpoon",
+        },
+
+        -- theme
+        {
+            "Shatur/neovim-ayu",
+        },
+
+        -- keymapping
+        {
+            "folke/which-key.nvim",
+        },
+
+        -- git
+        {
+            "tpope/vim-fugitive",
+        },
+    },
+
+    -- Configure any other settings here. See the documentation for more details.
+    -- colorscheme that will be used when installing plugins.
+    install = { colorscheme = { "habamax" } },
+    -- automatically check for plugin updates
+    checker = { enabled = true },
 })
