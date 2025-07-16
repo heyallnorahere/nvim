@@ -3,18 +3,19 @@
 
 export = {}
 
-export.cmp = {
-    preset = "default",
+local cmp = require("cmp")
+local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
-    ["<Tab>"] = { "select_next", "fallback" },
-    ["<C-n>"] = { "select_next", "fallback" },
-    ["<S-Tab>"] = { "select_prev", "fallback" },
-    ["<C-p>"] = { "select_prev", "fallback" },
+export.cmp = cmp.mapping.preset.insert({
+    ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
+    ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
+    ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+    ["<C-Space>"] = cmp.mapping.complete(),
 
     -- disable
     ["<Up>"] = {},
     ["<Down>"] = {},
-}
+})
 
 function export.on_lsp_attach(client, buf)
     local wk = require("which-key")

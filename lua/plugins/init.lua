@@ -28,7 +28,13 @@ require("lazy").setup({
 
         {
             "neovim/nvim-lspconfig",
-            dependencies = { "saghen/blink.cmp" },
+            dependencies = {
+                "hrsh7th/cmp-nvim-lsp",
+                "hrsh7th/cmp-buffer",
+                "hrsh7th/cmp-path",
+                "hrsh7th/cmp-cmdline",
+                "hrsh7th/nvim-cmp",
+            },
             config = require("plugins.lsp"),
             ft = { "cpp", "c", "cmake", "bash", "yaml", "lua", "json", "glsl" }
         },
@@ -49,64 +55,6 @@ require("lazy").setup({
             dependencies = {
                 "mason-org/mason.nvim",
                 "neovim/nvim-lspconfig",
-            },
-        },
-
-        {
-            "saghen/blink.cmp",
-            version = "*",
-            opts = {
-                keymap = require("config.remap").cmp,
-                completion = {
-                    list = { selection = { preselect = false } },
-                },
-                sources = {
-                    default = { "buffer", "lsp", "path", "snippets" },
-                    providers = { lsp = { fallbacks = {} } },
-                },
-                fuzzy = { implementation = "prefer_rust_with_warning" },
-                appearance = {
-                    highlight_ns = vim.api.nvim_create_namespace('blink_cmp'),
-                    -- Sets the fallback highlight groups to nvim-cmp's highlight groups
-                    -- Useful for when your theme doesn't support blink.cmp
-                    -- Will be removed in a future release
-                    use_nvim_cmp_as_default = false,
-                    -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-                    -- Adjusts spacing to ensure icons are aligned
-                    nerd_font_variant = 'mono',
-                    kind_icons = {
-                        Text = "Text",
-                        Method = "Method",
-                        Function = "Func",
-                        Constructor = "Ctor",
-
-                        Field = "Field",
-                        Variable = "Var",
-                        Property = "Prop",
-
-                        Class = "Class",
-                        Interface = "Interface",
-                        Struct = "Struct",
-                        Module = "Mod",
-
-                        Unit = "Unit",
-                        Value = "Val",
-                        Enum = "Enum",
-                        EnumMember = "EVal",
-
-                        Keyword = "Key",
-                        Constant = "Const",
-
-                        Snippet = "Snip",
-                        Color = "Color",
-                        File = "File",
-                        Reference = "Ref",
-                        Folder = "Dir", -- why is it called a "folder" lmfao
-                        Event = "Event",
-                        Operator = "Op",
-                        TypeParameter = "TypeParam",
-                    },
-                }
             },
         },
 

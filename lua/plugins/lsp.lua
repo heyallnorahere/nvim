@@ -43,4 +43,13 @@ return function()
     vim.lsp.config("clangd", {
         on_attach = on_lsp_attach,
     })
+
+    local cmp = require("cmp")
+    cmp.setup({
+        mapping = remap.cmp,
+        sources = cmp.config.sources({
+            { name = "nvim_lsp" },
+            { name = "buffer" },
+        }),
+    })
 end
