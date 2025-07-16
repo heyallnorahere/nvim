@@ -75,7 +75,25 @@ function export.map_keys()
         end },
     })
 
-    -- lsp
+    -- debugging
+    local dap = require("dap")
+
+    wk.add({
+        { "<leader>db", dap.toggle_breakpoint },
+        { "<leader>dc", dap.continue },
+        { "<leader>do", dap.step_over },
+        { "<leader>di", dap.step_into },
+        { "<leader>dr", dap.repl.open },
+    })
+
+    -- tasks
+    local overseer = require("overseer")
+
+    wk.add({
+        { "<C-B>", function() overseer.run_template({ tags = { overseer.TAG.BUILD } }) end },
+        { "<leader>to", overseer.open },
+        { "<leader>tc", overseer.close },
+    })
 end
 
 return export

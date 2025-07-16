@@ -162,18 +162,48 @@ require("lazy").setup({
             dependencies = {
                 colorscheme[1],
                 "echasnovski/mini.icons",
+                "stevearc/overseer.nvim",
             },
-            opts = {
-                options = {
-                    theme = "tokyonight",
-                },
+            config = function()
+                local lualine = require("lualine")
+                local overseer = require("overseer")
+
+                lualine.setup({
+                    options = {
+                        theme = "tokyonight",
+                    },
+                    sections = {
+                        lualine_x = {
+                            "overseer",
+                        },
+                    },
+                    extensions = {
+                        "overseer",
+                    },
+                })
+            end,
+        },
+
+        -- debugger
+        {
+            "mfussenegger/nvim-dap",
+            opts = {},
+            config = require("plugins.dap"),
+        },
+
+        -- tasks
+        {
+            "stevearc/overseer.nvim",
+            opts = {},
+            dependencies = {
+                "mfussenegger/nvim-dap",
             },
         },
     },
 
     -- Configure any other settings here. See the documentation for more details.
     -- colorscheme that will be used when installing plugins.
-    install = { colorscheme = { "habamax" } },
+    install = { colorscheme = { "tokyonight" } },
     -- automatically check for plugin updates
     checker = { enabled = true },
 })
