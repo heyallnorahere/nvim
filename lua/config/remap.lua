@@ -23,7 +23,7 @@ function export.on_lsp_attach(client, buf)
     -- https://github.com/goolord/nvim/blob/main/lua/modules/lsp.lua
     wk.add {
         { noremap = true, silent = true, buffer = buf },
-        { "<C-d>", function() vim.diagnostic.open_float(0, { scope = "line" }) end, desc = "Show diagnostics" },
+        { "<leader>ld", function() vim.diagnostic.open_float(0, { scope = "line" }) end, desc = "Show diagnostics" },
         { "K", vim.lsp.buf.hover, desc = "Hover" },
         { "g[", vim.diagnostic.goto_prev, desc = "Previous diagnostic" },
         { "g]", vim.diagnostic.goto_next, desc = "Next diagnostic" },
@@ -50,7 +50,14 @@ function export.map_keys()
         { "<leader>gs", vim.cmd.Git },
     }}
 
-    -- harpoon
+    -- oh god i need these
+    wk.add({
+        mode = { "v" },
+        { "J", ":m '>+1<CR>gv=gv" },
+        { "K", ":m '<-2<CR>gv=gv" },
+    })
+
+    -- harpoon is the greatest plugin to ever have been written
     local mark = require("harpoon.mark")
     local ui = require("harpoon.ui")
 
