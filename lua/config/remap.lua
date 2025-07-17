@@ -88,7 +88,7 @@ function export.map_keys()
     wk.add({
         { "<leader>db", dap.toggle_breakpoint },
         { "<leader>dc", dap.continue },
-        { "<C-S>", dap.step_over },
+        { "<C-Tab>", dap.step_over },
         { "<leader>di", dap.step_into },
         { "<leader>do", dap.step_out },
         { "<leader>dr", dap.repl.open },
