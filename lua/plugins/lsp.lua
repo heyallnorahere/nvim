@@ -42,6 +42,10 @@ return function()
     -- overwrite clangd on_attach
     vim.lsp.config("clangd", {
         on_attach = on_lsp_attach,
+        cmd = {
+            "clangd",
+            "--header-insertion=never",
+        },
     })
 
     local cmp = require("cmp")
