@@ -17,15 +17,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require("config.set")
 
-local colorscheme = {
-    "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {
-        style = "night",
-    },
-}
-
 -- Setup lazy.nvim
 require("lazy").setup({
     spec = {
@@ -56,9 +47,6 @@ require("lazy").setup({
                     "cmake",
                     "clangd",
                     "lua_ls",
-                    "yamlls",
-                    "glslls",
-                    "jsonls",
                 },
             },
             dependencies = {
@@ -144,7 +132,24 @@ require("lazy").setup({
         },
 
         -- theme
-        colorscheme,
+        {
+            "folke/tokyonight.nvim",
+            lazy = false,
+            priority = 1000,
+            opts = {
+                style = "night",
+            },
+        },
+
+        {
+            "catppuccin/nvim",
+            name = "catppuccin",
+            priority = 1000,
+            opts = {
+                flavour = "mocha",
+            },
+        },
+
 
         -- keymapping
         {
@@ -160,7 +165,8 @@ require("lazy").setup({
         {
             "nvim-lualine/lualine.nvim",
             dependencies = {
-                colorscheme[1],
+                "folke/tokyonight.nvim",
+                "catppuccin/nvim",
                 "echasnovski/mini.icons",
                 "stevearc/overseer.nvim",
             },
@@ -203,7 +209,7 @@ require("lazy").setup({
 
     -- Configure any other settings here. See the documentation for more details.
     -- colorscheme that will be used when installing plugins.
-    install = { colorscheme = { "tokyonight" } },
+    install = { colorscheme = { "catppuccin" } },
     -- automatically check for plugin updates
     checker = { enabled = true },
 })

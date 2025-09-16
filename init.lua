@@ -5,4 +5,4 @@ require("plugins")
 require("config.remap").map_keys()
 
 -- set colorscheme
-vim.cmd("colorscheme tokyonight")
+vim.cmd.colorscheme "catppuccin"

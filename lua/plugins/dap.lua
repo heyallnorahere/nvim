@@ -8,7 +8,7 @@ return function()
     dap.adapters.cppdbg = {
         type = "executable",
         id = "cppdbg",
-        command = os.getenv("HOME") .. "/cpptools/extension/debugAdapters/bin/OpenDebugAD7",
+        command = "/home/nora/cpptools/extension/debugAdapters/bin/OpenDebugAD7",
     }
 
     -- throw eggs at me
