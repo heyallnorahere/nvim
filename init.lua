@@ -1,3 +1,5 @@
+vim.opt.shell = "zsh"
+
 -- load plugins
 require("plugins")
 
