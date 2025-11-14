@@ -7,17 +7,26 @@ return function()
         -- nano has other stuff. uh...
     end
 
-    vim.lsp.config("*", {
-        on_attach = on_lsp_attach,
-    })
+    -- kind of hacky
+    local prev_start = vim.lsp.start
+    vim.lsp.start = function(config, opts)
+        local prev_on_attach = config.on_attach
+        if not prev_on_attach then
+            config.on_attach = on_lsp_attach
+        else
+            config.on_attach = function (client, buf)
+                prev_on_attach(client, buf)
+                on_lsp_attach(client, buf)
+            end
+        end
+        return prev_start(config, opts)
+    end
 
     vim.lsp.config("lua_ls", {
         on_attach = function(client, buf)
             runtime_path = vim.split(package.path, ";")
             table.insert(runtime_path, "lua/?.lua")
             table.insert(runtime_path, "lua/?/init.lua")
-
-            on_lsp_attach(client, buf)
         end,
         cmd = { "lua-language-server" },
         settings = {
@@ -41,7 +50,6 @@ return function()
 
     -- overwrite clangd on_attach
     vim.lsp.config("clangd", {
-        on_attach = on_lsp_attach,
         cmd = {
             "clangd",
             "--header-insertion=never",
